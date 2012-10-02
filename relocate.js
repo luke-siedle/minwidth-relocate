@@ -1,6 +1,6 @@
 /**
  * Use relocat() to move HTML elements in the DOM 
- * above a certain window width.
+ * above or below a certain window width.
  * 
  * Copyright by Eike Send, Edenspiekermann AG
  * 
@@ -8,7 +8,7 @@
  *
  */
 
-relocate = function(width, elements, destinationElement) {
+relocate = function(width, elements, destinationElement, dir) {
   // ensure that we use an array-like argument, NodeList and HTMLCollection work as well
   if (elements.nodeName) elements = [elements];
   var placeHolders = [],
@@ -39,5 +39,9 @@ relocate = function(width, elements, destinationElement) {
     }
   }
   // then create a object that operates on it:
-  minwidth(width, forwardFunction, backwardFunction);
+  if( ! dir || dir == 'above' ){
+    minwidth(width, forwardFunction, backwardFunction);
+  } else if( dir == 'below') {
+    minwidth(width, backwardFunction, forwardFunction);
+  }
 }
